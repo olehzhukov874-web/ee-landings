@@ -423,7 +423,7 @@ body.free .disc,body:not(.free) .nodisc{display:none}
   <div class="certs">
     <button class="cert" type="button" data-i="0"><img src="../../img/cert1.webp" alt="" loading="lazy" width="620" height="930"><span class="txt"><span class="flag">🇪🇪</span><span class="t">Tootja otsemüük</span><span class="rule"></span><span class="p">Tellimusi töötleb tootja oma klienditeenindus. Iga tellimus kinnitatakse enne väljasaatmist telefoni teel.</span><span class="prod">Cystolax®</span></span></button>
     <button class="cert" type="button" data-i="1"><img src="../../img/cert2.webp" alt="" loading="lazy" width="620" height="930"><span class="txt"><span class="flag">🇪🇪</span><span class="t">Originaalpakend</span><span class="rule"></span><span class="p">Iga saadetis väljastatakse tootja pitseri ja partii numbriga. Vahendajaid ega edasimüüjaid ei ole.</span><span class="prod">Cystolax®</span></span></button>
-    <button class="cert" type="button" data-i="2"><img src="../../img/cert3.webp" alt="" loading="lazy" width="620" height="930"><span class="txt"><span class="flag">🇪🇪</span><span class="t">Müüja kohustus</span><span class="rule"></span><span class="p">Saadetise saate kättesaamisel üle vaadata ja maksate alles pärast kontrollimist. Soovi korral võite sellest tasuta loobuda.</span><span class="prod">Cystolax®</span></span></button>
+    <button class="cert" type="button" data-i="2"><img src="../../img/cert3.webp" alt="" loading="lazy" width="620" height="930"><span class="txt"><span class="flag">🇪🇪</span><span class="t">Müüja kohustus</span><span class="rule"></span><span class="p">Vaatad saadetise kättesaamisel üle ja maksad alles pärast kontrollimist. Soovi korral võid sellest tasuta loobuda.</span><span class="prod">Cystolax®</span></span></button>
   </div>
 </div>
 <div class="cert-lb" id="certLb" hidden><button class="cert-x" type="button" aria-label="×">×</button><div class="cert-big"></div></div>
@@ -801,8 +801,9 @@ body.free .disc,body:not(.free) .nodisc{display:none}
   var AGO=[14,42,96,180,260,420];   // первые шесть — свежие, дальше растёт плавно (отзывов теперь 72)
   Array.prototype.forEach.call(document.querySelectorAll('.ago'),function(el){
     var i=+el.getAttribute('data-i'), m=(i<AGO.length?AGO[i]:Math.round(600+i*i*3.2+i*180)), t;
-    if(m<60) t=m+L.agoMin; else if(m<1440) t=Math.round(m/60)+L.agoH;
-    else if(m<2880) t=L.agoY; else t=Math.round(m/1440)+L.agoD;
+    var agoF=function(n,s){return s.indexOf('{n}')>=0?s.replace('{n}',n):n+s;};   // «vor {n} Min.» / «{n} min temu»
+    if(m<60) t=agoF(m,L.agoMin); else if(m<1440) t=agoF(Math.round(m/60),L.agoH);
+    else if(m<2880) t=L.agoY; else t=agoF(Math.round(m/1440),L.agoD);
     el.textContent=t;
   });
 
